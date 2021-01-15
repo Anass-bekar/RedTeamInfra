@@ -121,19 +121,6 @@ resource "digitalocean_droplet" "c2Server" {
     destination = "/tmp/c2.ovpn"
   }
   #Executing Commands and transferring files to our Instance via ssh
-      provisioner "remote-exec" {
-    inline = [
-      "mkdir /tmp/ssl",
-     ]
-  } 
-    provisioner "file" {
-    source      = "ssl/cert.pem"
-    destination = "/tmp/ssl/cert.pem"
-  }
-    provisioner "file" {
-    source      = "ssl/key.pem"
-    destination = "/tmp/ssl/key.pem"
-  }
     provisioner "file" {
     source      = "c2_setup.sh"
     destination = "/tmp/c2_setup.sh"
