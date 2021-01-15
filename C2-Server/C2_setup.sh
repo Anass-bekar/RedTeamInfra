@@ -6,7 +6,6 @@ apt install curl -y
 sudo apt install -y openvpn
 sudo apt install -y network-manager-openvpn
 #prepare certs and launch openvpn as a daemon
-chmod 600 /tmp/ssl/*
 openvpn --config /tmp/c2.ovpn --daemon 
 #install python
 sudo apt-get install -y python3
