@@ -117,8 +117,8 @@ resource "digitalocean_droplet" "Redirector" {
     destination = "/tmp/redirect.ovpn"
   }
     provisioner "file" {
-    source      = "conf.sh"
-    destination = "/tmp/conf.sh"
+    source      = "redirector.sh"
+    destination = "/tmp/redirector.sh"
   }
       provisioner "file" {
     source      = "nginx.conf"
@@ -129,10 +129,17 @@ resource "digitalocean_droplet" "Redirector" {
     inline = [
       "export PATH=$PATH:/usr/bin",
       "apt-get update",
-      "chmod +x /tmp/conf.sh",
-      "/bin/bash /tmp/conf.sh",
+      "chmod +x /tmp/redirector.sh",
+      "/bin/bash /tmp/redirector.sh",
     ]
   }
+}
+# Add an A record to the domain for www.example.com.
+resource "digitalocean_record" "default" {
+  domain = "Your domain"
+  type   = "A"
+  name   = "@"
+  value  = digitalocean_droplet.c2Server.ipv4_address
 }
 #print ressource's Ip address
 output "IP" {
