@@ -92,24 +92,24 @@ resource "digitalocean_droplet" "vpn_server" {
     destination = "/tmp/openvpn-install.sh"
   }
     provisioner "file" {
-    source      = "config.sh"
-    destination = "/tmp/config.sh"
+    source      = "vpn_setup.sh"
+    destination = "/tmp/vpn_setup.sh"
   }
   provisioner "remote-exec" {
     inline = [
-    "chmod +x /tmp/config.sh",
-    "/bin/bash /tmp/config.sh",
+    "chmod +x /tmp/vpn_setup.sh",
+    "/bin/bash /tmp/vpn_setup.sh",
     ]
   }
   #dowload client vpn files from the vpn server via ssh
   provisioner "local-exec" {
-   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/redirect.ovpn ../serverless-redirector"
+   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/redirect.ovpn ../Redirector"
   }
     provisioner "local-exec" {
-   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/c2.ovpn ../base-c2"
+   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/c2.ovpn ../C2-Server"
   }
     provisioner "local-exec" {
-   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/client.ovpn ../base-vpn"
+   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/client.ovpn ../VPN-Server"
 
   }
 }
