@@ -103,7 +103,7 @@ resource "digitalocean_droplet" "vpn_server" {
   }
   #dowload client vpn files from the vpn server via ssh
   provisioner "local-exec" {
-   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/redirect.ovpn ../Redirector"
+   command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/redirect.ovpn ../redirector"
   }
     provisioner "local-exec" {
    command="scp -o StrictHostKeyChecking=no root@${self.ipv4_address}:/root/c2.ovpn ../C2-Server"
